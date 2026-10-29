@@ -1,4 +1,4 @@
-// Language: saved choice, else the browser's, else English. Text lives in data-i keys below.
+// Language: English by default, or the visitor's saved choice. Text lives in data-i keys below.
 const T = {
   es: {
     nav_features: 'Funciones', nav_promise: 'Promesa de anuncios', nav_styles: 'Estilos',
@@ -58,9 +58,9 @@ const EN = {};
 document.querySelectorAll('[data-i]').forEach(el => { EN[el.dataset.i] = el.textContent; });
 
 function pick() {
-  try { const saved = localStorage.getItem('lang'); if (saved) return saved; } catch (e) {}
-  const nav = (navigator.language || 'en').slice(0, 2);
-  return nav === 'es' || nav === 'pt' ? nav : 'en';
+  // English is the main language; Spanish and Portuguese only when the visitor chooses them.
+  try { const saved = localStorage.getItem('lang'); if (saved === 'es' || saved === 'pt') return saved; } catch (e) {}
+  return 'en';
 }
 
 function apply(lang) {
